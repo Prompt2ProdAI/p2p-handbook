@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next.js Framework | Modern Web Development Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --success: #4facfe;
+            --warning: #fa709a;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --shadow: rgba(102, 126, 234, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 15px;
+            overflow-x: hidden;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--dark) 0%, #2d2d4a 100%);
+            color: white;
+            padding: 35px 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.02) 10px,
+                rgba(255,255,255,0.02) 20px
+            );
+        }
+
+        header h1 {
+            font-size: 1.8em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #ffffff, #a8b8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        header p {
+            font-size: 0.95em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content {
+            padding: 25px 20px;
+            background: #fafbfc;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px var(--shadow);
+        }
+
+        .section-number {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4em;
+            font-weight: 800;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .section-info h2 {
+            font-size: 1.5em;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 3px;
+        }
+
+        .section-info p {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
+        }
+
+        .topic-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .topic-icon {
+            font-size: 1.6em;
+            filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.3));
+        }
+
+        .topic-title {
+            font-size: 1.05em;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .concept-list {
+            list-style: none;
+        }
+
+        .concept-item {
+            padding: 9px 12px;
+            margin: 6px 0;
+            background: linear-gradient(135deg, #f8f9ff, #ffffff);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 3px solid var(--primary);
+            font-weight: 600;
+            color: #555;
+            position: relative;
+            overflow: hidden;
+            font-size: 0.88em;
+        }
+
+        .concept-item::before {
+            content: '→';
+            position: absolute;
+            right: 15px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            color: white;
+        }
+
+        .concept-item:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .concept-item:hover::before {
+            opacity: 1;
+            right: 10px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 46, 0.96);
+            animation: fadeIn 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow: hidden;
+            animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px) scale(0.96);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .modal-header h2 {
+            font-size: 1.3em;
+            font-weight: 800;
+        }
+
+        .close-btn {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            font-size: 1.3em;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .modal-body {
+            padding: 20px;
+            max-height: calc(85vh - 75px);
+            overflow-y: auto;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+
+        .description {
+            background: linear-gradient(135deg, #fff7e6, #ffe8f5);
+            border-left: 3px solid var(--warning);
+            padding: 12px 15px;
+            margin-bottom: 18px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        .example-section {
+            margin-bottom: 18px;
+        }
+
+        .section-title {
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 6px;
+            height: 22px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .code-wrapper {
+            background: #1e1e1e;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .code-header {
+            background: #2d2d2d;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #3d3d3d;
+        }
+
+        .code-label {
+            color: #888;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, var(--success), #00f2fe);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(79, 172, 254, 0.3);
+        }
+
+        .copy-btn.copied {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        .code-block {
+            padding: 15px;
+            color: #d4d4d4;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8em;
+            line-height: 1.5;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .code-block::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .code-block::-webkit-scrollbar-track {
+            background: #2d2d2d;
+        }
+
+        .code-block::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 4px;
+        }
+
+        /* Syntax highlighting */
+        .keyword { color: #c678dd; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+        .function { color: #61afef; }
+        .number { color: #d19a66; }
+        .tag { color: #e06c75; }
+        .attr { color: #d19a66; }
+        .value { color: #98c379; }
+
+        .output-wrapper {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border: 2px solid #e0e7ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+
+        .output-label {
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .output-label::before {
+            content: '▶';
+            color: var(--success);
+            font-size: 0.9em;
+        }
+
+        .live-output {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 60px;
+            border: 2px solid #e9ecef;
+        }
+
+        .demo-interactive {
+            background: linear-gradient(135deg, #ffeef8, #fff7e6);
+            border: 2px dashed var(--warning);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .demo-title {
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 12px;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .demo-title::before {
+            content: '✨';
+            font-size: 1em;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.8;
+            margin: 5px 0;
+            font-size: 0.85em;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 8px;
+                font-size: 13px;
+            }
+
+            header {
+                padding: 25px 15px;
+            }
+
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            header p {
+                font-size: 0.9em;
+            }
+
+            .content {
+                padding: 20px 12px;
+            }
+
+            .section {
+                margin-bottom: 25px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px;
+                gap: 10px;
+            }
+
+            .section-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2em;
+            }
+
+            .section-info h2 {
+                font-size: 1.3em;
+            }
+
+            .section-info p {
+                font-size: 0.85em;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .topic-card {
+                padding: 12px;
+            }
+
+            .topic-icon {
+                font-size: 1.4em;
+            }
+
+            .topic-title {
+                font-size: 1em;
+            }
+
+            .concept-item {
+                padding: 8px 10px;
+                font-size: 0.85em;
+            }
+
+            .modal-header h2 {
+                font-size: 1.1em;
+            }
+
+            .modal-body {
+                padding: 15px;
+            }
+
+            .code-block {
+                font-size: 0.75em;
+                padding: 12px;
+            }
+
+            .description {
+                padding: 10px 12px;
+                font-size: 0.85em;
+            }
+
+            .section-title {
+                font-size: 1em;
+            }
+        }
+    
+        .section-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        .section-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.08);
+            font-size: 0.8em;
+            font-weight: 700;
+        }
+        .section-nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Next.js Framework</h1>
+            <p>Build production-ready React applications</p>
+            <div class="section-nav"><a href="html-fundamentals.html">HTML Fundamentals</a><a href="tailwind-css.html">Tailwind CSS</a><a href="javascript-essentials.html">JavaScript Essentials</a><a href="nextjs-framework.html">Next.js Framework</a><a href="fastapi-python.html">FastAPI in Python</a></div>
+        </header>
+
+        <div class="content">
+<section class="section">
+                <div class="section-header">
+                    <div class="section-number">4</div>
+                    <div class="section-info">
+                        <h2>Next.js Framework</h2>
+                        <p>Build production-ready React applications</p>
+                    </div>
+                </div>
+
+                <div class="topics-grid">
+                    <div class="topic-card">
+                        <div class="topic-header">
+                            <span class="topic-icon">🚀</span>
+                            <h3 class="topic-title">Getting Started</h3>
+                        </div>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="next-intro">What is Next.js?</li>
+                            <li class="concept-item" data-example="next-setup">Setup & Installation</li>
+                            <li class="concept-item" data-example="next-structure">Project Structure</li>
+                            <li class="concept-item" data-example="next-features">Key Features</li>
+                        </ul>
+                    </div>
+
+                    <div class="topic-card">
+                        <div class="topic-header">
+                            <span class="topic-icon">🛣️</span>
+                            <h3 class="topic-title">Routing</h3>
+                        </div>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="next-app-router">App Router</li>
+                            <li class="concept-item" data-example="next-pages-router">Pages Router</li>
+                            <li class="concept-item" data-example="next-dynamic">Dynamic Routes</li>
+                            <li class="concept-item" data-example="next-navigation">Navigation</li>
+                        </ul>
+                    </div>
+
+                    <div class="topic-card">
+                        <div class="topic-header">
+                            <span class="topic-icon">📊</span>
+                            <h3 class="topic-title">Data Fetching</h3>
+                        </div>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="next-ssr">Server-Side Rendering</li>
+                            <li class="concept-item" data-example="next-ssg">Static Generation</li>
+                            <li class="concept-item" data-example="next-isr">Incremental Static Regeneration</li>
+                            <li class="concept-item" data-example="next-client-fetch">Client-Side Fetching</li>
+                        </ul>
+                    </div>
+
+                    <div class="topic-card">
+                        <div class="topic-header">
+                            <span class="topic-icon">🧩</span>
+                            <h3 class="topic-title">Components</h3>
+                        </div>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="next-server-components">Server Components</li>
+                            <li class="concept-item" data-example="next-client-components">Client Components</li>
+                            <li class="concept-item" data-example="next-layouts">Layouts</li>
+                            <li class="concept-item" data-example="next-metadata">Metadata</li>
+                        </ul>
+                    </div>
+
+                    <div class="topic-card">
+                        <div class="topic-header">
+                            <span class="topic-icon">🔌</span>
+                            <h3 class="topic-title">API Routes</h3>
+                        </div>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="next-api-basic">Basic API Routes</li>
+                            <li class="concept-item" data-example="next-api-dynamic">Dynamic API Routes</li>
+                            <li class="concept-item" data-example="next-api-methods">HTTP Methods</li>
+                            <li class="concept-item" data-example="next-middleware">Middleware</li>
+                        </ul>
+                    </div>
+
+                    <div class="topic-card">
+                        <div class="topic-header">
+                            <span class="topic-icon">⚡</span>
+                            <h3 class="topic-title">Optimization</h3>
+                        </div>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="next-image">Image Optimization</li>
+                            <li class="concept-item" data-example="next-fonts">Font Optimization</li>
+                            <li class="concept-item" data-example="next-caching">Caching Strategies</li>
+                            <li class="concept-item" data-example="next-performance">Performance Tips</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p><strong>🚀 Modern Web Development Guide</strong></p>
+            <p>Section-focused view for easier debugging</p>
+            <p style="margin-top: 20px; font-size: 0.9em;">Built with ❤️ for developers • 2026</p>
+        </footer>
+    </div>
+
+    <div class="modal" id="exampleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Example</h2>
+                <button class="close-btn" id="closeBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="examples-database.js"></script>
+    <script>
+        const modal = document.getElementById('exampleModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const closeBtn = document.getElementById('closeBtn');
+
+        document.querySelectorAll('.concept-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const exampleKey = this.getAttribute('data-example');
+                showExample(exampleKey);
+            });
+        });
+
+        function showExample(key) {
+            const example = examples[key];
+            if (!example) {
+                modalTitle.textContent = 'Coming Soon!';
+                modalBody.innerHTML = '<div class="description"><strong>This example is being prepared!</strong><br><br>We\'re working on adding this topic.</div>';
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                return;
+            }
+
+            modalTitle.textContent = example.title;
+
+            let bodyHTML = '';
+            bodyHTML += '<div class="description">' + (example.description || '') + '</div>';
+            bodyHTML += '<div class="example-section">';
+            bodyHTML += '<div class="section-title">' + (example.language || 'Code') + ' Example</div>';
+            bodyHTML += '<div class="code-wrapper">';
+            bodyHTML += '<div class="code-header">';
+            bodyHTML += '<span class="code-label">' + (example.language || 'CODE') + '</span>';
+            bodyHTML += '<button class="copy-btn" onclick="copyCode(\'' + key + '\', this)">Copy Code</button>';
+            bodyHTML += '</div>';
+            bodyHTML += '<pre class="code-block"><code>' + escapeHtml(example.code || '') + '</code></pre>';
+            bodyHTML += '</div>';
+            bodyHTML += '</div>';
+
+            if (example.output) {
+                bodyHTML += '<div class="example-section">';
+                bodyHTML += '<div class="section-title">Live Output</div>';
+                bodyHTML += '<div class="output-wrapper">';
+                bodyHTML += '<div class="output-label">Result</div>';
+                bodyHTML += '<div class="live-output">' + example.output + '</div>';
+                bodyHTML += '</div>';
+                bodyHTML += '</div>';
+            }
+
+            if (example.interactive) {
+                bodyHTML += '<div class="demo-interactive">';
+                bodyHTML += '<div class="demo-title">Interactive Demo</div>';
+                bodyHTML += example.interactive;
+                bodyHTML += '</div>';
+            }
+
+            if (example.notes) {
+                bodyHTML += '<div class="example-section">';
+                bodyHTML += '<div class="section-title">📌 Important Notes</div>';
+                bodyHTML += '<div class="description">' + example.notes + '</div>';
+                bodyHTML += '</div>';
+            }
+
+            modalBody.innerHTML = bodyHTML;
+            executeEmbeddedScripts(modalBody);
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+
+            if (example.initDemo) {
+                setTimeout(() => example.initDemo(), 100);
+            }
+        }
+
+        function closeModal() {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
+                closeModal();
+            }
+        });
+
+        function copyCode(key, btn) {
+            const example = examples[key];
+            if (!example || !btn) return;
+
+            navigator.clipboard.writeText(example.code || '').then(() => {
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function executeEmbeddedScripts(container) {
+            const scripts = container.querySelectorAll('script');
+            scripts.forEach(oldScript => {
+                const newScript = document.createElement('script');
+                if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                } else {
+                    newScript.textContent = oldScript.textContent;
+                }
+                oldScript.replaceWith(newScript);
+            });
+        }
+    </script>
+</body>
+</html>
