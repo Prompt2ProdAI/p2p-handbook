@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive HTML Learning Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #1A1A2E;
+            --light: #F8F9FA;
+            --shadow: rgba(26, 26, 46, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        header {
+            background: var(--dark);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.03) 10px,
+                rgba(255,255,255,0.03) 20px
+            );
+        }
+        
+        header h1 {
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .content {
+            padding: 60px 40px;
+        }
+        
+        .level {
+            margin-bottom: 60px;
+        }
+        
+        .level-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .level-number {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+        
+        .level-title {
+            font-size: 2.2em;
+            font-weight: 800;
+            color: var(--dark);
+        }
+        
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .topic-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--shadow);
+            border-color: var(--secondary);
+        }
+        
+        .topic-title {
+            font-size: 1.4em;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .concept-list {
+            list-style: none;
+        }
+        
+        .concept-item {
+            padding: 12px 15px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 3px solid var(--primary);
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .concept-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 46, 0.95);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 1100px;
+            max-height: 90vh;
+            overflow: hidden;
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            font-size: 2em;
+            font-weight: 800;
+        }
+        
+        .close-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 2em;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 40px;
+            max-height: calc(90vh - 120px);
+            overflow-y: auto;
+        }
+        
+        .description {
+            background: #FFF9E6;
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .example-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title::before {
+            content: '';
+            width: 8px;
+            height: 30px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 4px;
+        }
+        
+        .code-wrapper {
+            background: #1E1E1E;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .code-header {
+            background: #2D2D2D;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .code-label {
+            color: #888;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+        }
+        
+        .copy-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #45b8af;
+            transform: translateY(-2px);
+        }
+        
+        .copy-btn.copied {
+            background: #4CAF50;
+        }
+        
+        .code-block {
+            padding: 25px;
+            color: #D4D4D4;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+        
+        .output-wrapper {
+            background: #F8F9FA;
+            border: 3px solid #E0E0E0;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+        
+        .output-label {
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .live-output {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            min-height: 80px;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+            
+            .topic-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 HTML Master Class</h1>
+            <p>Click any concept to see live code examples and output</p>
+        </header>
+        
+        <div class="content">
+            <!-- LEVEL 1 -->
+            <section class="level">
+                <div class="level-header">
+                    <div class="level-number">1</div>
+                    <h2 class="level-title">Fundamentals</h2>
+                </div>
+                
+                <div class="topic-grid">
+                    <div class="topic-card">
+                        <h3 class="topic-title">🏗️ Basic Structure</h3>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="doctype">DOCTYPE Declaration</li>
+                            <li class="concept-item" data-example="html-element">HTML Element</li>
+                            <li class="concept-item" data-example="head-element">HEAD Element</li>
+                            <li class="concept-item" data-example="body-element">BODY Element</li>
+                            <li class="concept-item" data-example="comments">HTML Comments</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h3 class="topic-title">📝 Text Elements</h3>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="headings">Headings (h1-h6)</li>
+                            <li class="concept-item" data-example="paragraph">Paragraphs</li>
+                            <li class="concept-item" data-example="line-break">Line Breaks (br)</li>
+                            <li class="concept-item" data-example="horizontal-rule">Horizontal Rule (hr)</li>
+                            <li class="concept-item" data-example="preformatted">Preformatted Text</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h3 class="topic-title">✨ Text Formatting</h3>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="bold">Bold (strong, b)</li>
+                            <li class="concept-item" data-example="italic">Italic (em, i)</li>
+                            <li class="concept-item" data-example="underline">Underline</li>
+                            <li class="concept-item" data-example="strikethrough">Strikethrough</li>
+                            <li class="concept-item" data-example="mark">Mark/Highlight</li>
+                            <li class="concept-item" data-example="small">Small Text</li>
+                            <li class="concept-item" data-example="sub-sup">Sub & Superscript</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h3 class="topic-title">🔗 Links</h3>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="anchor">Anchor Tags</li>
+                            <li class="concept-item" data-example="link-target">Target Attribute</li>
+                            <li class="concept-item" data-example="email-link">Email Links</li>
+                            <li class="concept-item" data-example="phone-link">Phone Links</li>
+                            <li class="concept-item" data-example="anchor-link">Jump Links</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h3 class="topic-title">📋 Lists</h3>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="ordered-list">Ordered Lists (ol)</li>
+                            <li class="concept-item" data-example="unordered-list">Unordered Lists (ul)</li>
+                            <li class="concept-item" data-example="description-list">Description Lists</li>
+                            <li class="concept-item" data-example="nested-list">Nested Lists</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h3 class="topic-title">🖼️ Images</h3>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="img-basic">IMG Tag Basics</li>
+                            <li class="concept-item" data-example="img-alt">Alt Attribute</li>
+                            <li class="concept-item" data-example="img-size">Width & Height</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- LEVEL 2 -->
+            <section class="level">
+                <div class="level-header">
+                    <div class="level-number">2</div>
+                    <h2 class="level-title">Intermediate</h2>
+                </div>
+                
+                <div class="topic-grid">
+                    <div class="topic-card">
+                        <h3 class="topic-title">📊 Tables</h3>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="table-basic">Basic Table</li>
+                            <li class="concept-item" data-example="table-sections">Table Sections</li>
+                            <li class="concept-item" data-example="table-span">Colspan & Rowspan</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h3 class="topic-title">📝 Forms</h3>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="form-basic">Basic Form</li>
+                            <li class="concept-item" data-example="input-text">Text Inputs</li>
+                            <li class="concept-item" data-example="textarea">Textarea</li>
+                            <li class="concept-item" data-example="select">Select Dropdown</li>
+                            <li class="concept-item" data-example="checkbox">Checkboxes</li>
+                            <li class="concept-item" data-example="radio">Radio Buttons</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h3 class="topic-title">🎯 Input Types</h3>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="input-email">Email</li>
+                            <li class="concept-item" data-example="input-number">Number</li>
+                            <li class="concept-item" data-example="input-date">Date</li>
+                            <li class="concept-item" data-example="input-color">Color Picker</li>
+                            <li class="concept-item" data-example="input-range">Range Slider</li>
+                            <li class="concept-item" data-example="input-file">File Upload</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h3 class="topic-title">🎬 Multimedia</h3>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="audio">Audio Element</li>
+                            <li class="concept-item" data-example="video">Video Element</li>
+                            <li class="concept-item" data-example="iframe">Iframe</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- LEVEL 3 -->
+            <section class="level">
+                <div class="level-header">
+                    <div class="level-number">3</div>
+                    <h2 class="level-title">Semantic HTML5</h2>
+                </div>
+                
+                <div class="topic-grid">
+                    <div class="topic-card">
+                        <h3 class="topic-title">🏛️ Page Structure</h3>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="semantic-header">Header Element</li>
+                            <li class="concept-item" data-example="semantic-nav">Nav Element</li>
+                            <li class="concept-item" data-example="semantic-main">Main Element</li>
+                            <li class="concept-item" data-example="semantic-section">Section Element</li>
+                            <li class="concept-item" data-example="semantic-article">Article Element</li>
+                            <li class="concept-item" data-example="semantic-aside">Aside Element</li>
+                            <li class="concept-item" data-example="semantic-footer">Footer Element</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h3 class="topic-title">📰 Content</h3>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="figure">Figure & Figcaption</li>
+                            <li class="concept-item" data-example="details">Details & Summary</li>
+                            <li class="concept-item" data-example="blockquote">Blockquote</li>
+                            <li class="concept-item" data-example="time">Time Element</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h3 class="topic-title">🎯 Text Semantics</h3>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="abbr">Abbreviation</li>
+                            <li class="concept-item" data-example="code">Code Element</li>
+                            <li class="concept-item" data-example="kbd">Keyboard Input</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="topic-card">
+                        <h3 class="topic-title">📊 Data</h3>
+                        <ul class="concept-list">
+                            <li class="concept-item" data-example="progress">Progress Bar</li>
+                            <li class="concept-item" data-example="meter">Meter Element</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal" id="exampleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Example</h2>
+                <button class="close-btn" id="closeBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Examples database
+        const examples = {
+            'headings': {
+                title: 'Headings (h1-h6)',
+                description: 'HTML provides 6 levels of headings. h1 is the most important (main heading) and h6 is the least important. Use headings to create a hierarchical structure for your content.',
+                code: `<h1>Main Heading (h1)</h1>
+<h2>Subheading (h2)</h2>
+<h3>Sub-subheading (h3)</h3>
+<h4>Heading Level 4 (h4)</h4>
+<h5>Heading Level 5 (h5)</h5>
+<h6>Heading Level 6 (h6)</h6>`,
+                output: `<h1 style="margin:10px 0;font-size:2em">Main Heading (h1)</h1>
+<h2 style="margin:10px 0;font-size:1.5em">Subheading (h2)</h2>
+<h3 style="margin:10px 0;font-size:1.3em">Sub-subheading (h3)</h3>
+<h4 style="margin:10px 0;font-size:1.1em">Heading Level 4 (h4)</h4>
+<h5 style="margin:10px 0;font-size:1em">Heading Level 5 (h5)</h5>
+<h6 style="margin:10px 0;font-size:0.9em">Heading Level 6 (h6)</h6>`
+            },
+            'paragraph': {
+                title: 'Paragraphs',
+                description: 'The &lt;p&gt; tag defines a paragraph. Browsers automatically add space before and after paragraphs.',
+                code: `<p>This is the first paragraph.</p>
+<p>This is the second paragraph with more text content.</p>
+<p>Paragraphs create spacing between text blocks.</p>`,
+                output: `<p style="margin:15px 0">This is the first paragraph.</p>
+<p style="margin:15px 0">This is the second paragraph with more text content.</p>
+<p style="margin:15px 0">Paragraphs create spacing between text blocks.</p>`
+            },
+            'bold': {
+                title: 'Bold Text',
+                description: '&lt;strong&gt; indicates important text (semantic meaning), while &lt;b&gt; is just bold styling without semantic meaning.',
+                code: `<p>This is <strong>important text</strong> using strong.</p>
+<p>This is <b>bold text</b> using b tag.</p>`,
+                output: `<p style="margin:10px 0">This is <strong>important text</strong> using strong.</p>
+<p style="margin:10px 0">This is <b>bold text</b> using b tag.</p>`
+            },
+            'italic': {
+                title: 'Italic Text',
+                description: '&lt;em&gt; indicates emphasized text (semantic), while &lt;i&gt; is just italic styling.',
+                code: `<p>This is <em>emphasized text</em> using em.</p>
+<p>This is <i>italic text</i> using i tag.</p>`,
+                output: `<p style="margin:10px 0">This is <em>emphasized text</em> using em.</p>
+<p style="margin:10px 0">This is <i>italic text</i> using i tag.</p>`
+            },
+            'ordered-list': {
+                title: 'Ordered Lists',
+                description: 'The &lt;ol&gt; tag creates a numbered list. Each item uses &lt;li&gt; tags.',
+                code: `<ol>
+    <li>First item</li>
+    <li>Second item</li>
+    <li>Third item</li>
+    <li>Fourth item</li>
+</ol>`,
+                output: `<ol style="margin:10px 0;padding-left:30px">
+    <li>First item</li>
+    <li>Second item</li>
+    <li>Third item</li>
+    <li>Fourth item</li>
+</ol>`
+            },
+            'unordered-list': {
+                title: 'Unordered Lists',
+                description: 'The &lt;ul&gt; tag creates a bulleted list. Each item uses &lt;li&gt; tags.',
+                code: `<ul>
+    <li>Apple</li>
+    <li>Banana</li>
+    <li>Orange</li>
+    <li>Mango</li>
+</ul>`,
+                output: `<ul style="margin:10px 0;padding-left:30px">
+    <li>Apple</li>
+    <li>Banana</li>
+    <li>Orange</li>
+    <li>Mango</li>
+</ul>`
+            },
+            'table-basic': {
+                title: 'Basic Table',
+                description: 'Tables use &lt;table&gt;, &lt;tr&gt; for rows, &lt;th&gt; for headers, and &lt;td&gt; for data cells.',
+                code: `<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>City</th>
+    </tr>
+    <tr>
+        <td>John Doe</td>
+        <td>30</td>
+        <td>New York</td>
+    </tr>
+    <tr>
+        <td>Jane Smith</td>
+        <td>25</td>
+        <td>London</td>
+    </tr>
+</table>`,
+                output: `<table style="border-collapse:collapse;width:100%">
+    <tr>
+        <th style="border:1px solid #ddd;padding:12px;background:#4ECDC4;color:white">Name</th>
+        <th style="border:1px solid #ddd;padding:12px;background:#4ECDC4;color:white">Age</th>
+        <th style="border:1px solid #ddd;padding:12px;background:#4ECDC4;color:white">City</th>
+    </tr>
+    <tr>
+        <td style="border:1px solid #ddd;padding:12px">John Doe</td>
+        <td style="border:1px solid #ddd;padding:12px">30</td>
+        <td style="border:1px solid #ddd;padding:12px">New York</td>
+    </tr>
+    <tr>
+        <td style="border:1px solid #ddd;padding:12px">Jane Smith</td>
+        <td style="border:1px solid #ddd;padding:12px">25</td>
+        <td style="border:1px solid #ddd;padding:12px">London</td>
+    </tr>
+</table>`
+            },
+            'img-basic': {
+                title: 'IMG Tag Basics',
+                description: 'The &lt;img&gt; tag embeds images. The src attribute specifies the image source, and alt provides alternative text.',
+                code: `<img src="https://via.placeholder.com/400x250/FF6B6B/ffffff?text=Sample+Image" 
+     alt="Sample Image Description">`,
+                output: `<img src="https://via.placeholder.com/400x250/FF6B6B/ffffff?text=Sample+Image" alt="Sample Image" style="max-width:100%;border-radius:8px">`
+            },
+            'form-basic': {
+                title: 'Basic Form',
+                description: 'Forms collect user input. Use action to specify where to send data and method (GET/POST) for how to send it.',
+                code: `<form action="/submit" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username">
+    <br><br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password">
+    <br><br>
+    <button type="submit">Login</button>
+</form>`,
+                output: `<form style="background:#f8f9fa;padding:20px;border-radius:8px">
+    <label for="demo-user">Username:</label><br>
+    <input type="text" id="demo-user" style="margin:8px 0;padding:10px;border:1px solid #ddd;border-radius:6px;width:250px"><br><br>
+    <label for="demo-pass">Password:</label><br>
+    <input type="password" id="demo-pass" style="margin:8px 0;padding:10px;border:1px solid #ddd;border-radius:6px;width:250px"><br><br>
+    <button type="button" style="background:#4ECDC4;color:white;padding:10px 30px;border:none;border-radius:6px;cursor:pointer;font-weight:600">Login</button>
+</form>`
+            },
+            'input-range': {
+                title: 'Range Slider',
+                description: 'Range input creates a slider for selecting values within a range.',
+                code: `<label for="volume">Volume:</label>
+<input type="range" id="volume" min="0" max="100" value="50">`,
+                output: `<div style="background:#f8f9fa;padding:20px;border-radius:8px">
+    <label for="demo-volume">Volume: <span id="vol-display">50</span></label><br>
+    <input type="range" id="demo-volume" min="0" max="100" value="50" style="width:100%;max-width:300px;margin:10px 0" oninput="document.getElementById('vol-display').textContent=this.value">
+</div>`
+            },
+            'select': {
+                title: 'Select Dropdown',
+                description: 'Create dropdown menus with &lt;select&gt; and &lt;option&gt; tags.',
+                code: `<label for="country">Country:</label>
+<select id="country">
+    <option value="">Select a country</option>
+    <option value="us">United States</option>
+    <option value="uk">United Kingdom</option>
+    <option value="ca">Canada</option>
+</select>`,
+                output: `<div style="background:#f8f9fa;padding:20px;border-radius:8px">
+    <label for="demo-country">Country:</label><br>
+    <select id="demo-country" style="margin:10px 0;padding:10px;border:1px solid #ddd;border-radius:6px;width:250px">
+        <option value="">Select a country</option>
+        <option value="us">United States</option>
+        <option value="uk">United Kingdom</option>
+        <option value="ca">Canada</option>
+    </select>
+</div>`
+            },
+            'semantic-header': {
+                title: 'Header Element',
+                description: 'The &lt;header&gt; represents introductory content, typically containing navigation or headings.',
+                code: `<header>
+    <h1>My Website</h1>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>`,
+                output: `<header style="background:#1A1A2E;color:white;padding:20px;border-radius:8px">
+    <h1 style="margin:0 0 15px 0;font-size:1.8em">My Website</h1>
+    <nav>
+        <a href="#" style="color:#4ECDC4;margin-right:15px;text-decoration:none">Home</a>
+        <a href="#" style="color:#4ECDC4;margin-right:15px;text-decoration:none">About</a>
+        <a href="#" style="color:#4ECDC4;text-decoration:none">Contact</a>
+    </nav>
+</header>`
+            },
+            'progress': {
+                title: 'Progress Bar',
+                description: 'The &lt;progress&gt; element displays the progress of a task.',
+                code: `<label for="download">Download progress:</label>
+<progress id="download" value="70" max="100">70%</progress>`,
+                output: `<div style="background:#f8f9fa;padding:20px;border-radius:8px">
+    <label for="demo-progress">Download progress:</label><br>
+    <progress id="demo-progress" value="70" max="100" style="width:100%;max-width:400px;height:30px;margin:10px 0">70%</progress>
+    <span style="margin-left:15px;font-weight:600">70%</span>
+</div>`
+            }
+        };
+        
+        // Get DOM elements
+        const modal = document.getElementById('exampleModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const closeBtn = document.getElementById('closeBtn');
+        
+        // Add click listeners to all concept items
+        document.querySelectorAll('.concept-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const exampleKey = this.getAttribute('data-example');
+                showExample(exampleKey);
+            });
+        });
+        
+        // Show example function
+        function showExample(key) {
+            const example = examples[key];
+            if (!example) {
+                alert('Example "' + key + '" not yet implemented. Try: headings, paragraph, bold, italic, ordered-list, unordered-list, table-basic, img-basic, form-basic, input-range, select, semantic-header, progress');
+                return;
+            }
+            
+            modalTitle.textContent = example.title;
+            modalBody.innerHTML = `
+                <div class="description">
+                    ${example.description}
+                </div>
+                
+                <div class="example-section">
+                    <div class="section-title">HTML Code</div>
+                    <div class="code-wrapper">
+                        <div class="code-header">
+                            <span class="code-label">HTML</span>
+                            <button class="copy-btn" onclick="copyCode('${key}', this)">Copy Code</button>
+                        </div>
+                        <pre class="code-block"><code>${escapeHtml(example.code)}</code></pre>
+                    </div>
+                </div>
+                
+                <div class="example-section">
+                    <div class="section-title">Live Output</div>
+                    <div class="output-wrapper">
+                        <div class="output-label">Preview:</div>
+                        <div class="live-output">${example.output}</div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close modal
+        function closeModal() {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        
+        closeBtn.addEventListener('click', closeModal);
+        
+        // Close on outside click
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // Close on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
+                closeModal();
+            }
+        });
+        
+        // Copy code function
+        function copyCode(key, btn) {
+            const example = examples[key];
+            if (!example) return;
+            
+            navigator.clipboard.writeText(example.code).then(() => {
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            }).catch(() => {
+                alert('Code copied!');
+            });
+        }
+        
+        // Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
