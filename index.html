@@ -3,10 +3,325 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modern Web Development Guide</title>
-  <meta http-equiv="refresh" content="0; url=web-dev-reference.html">
+  <title>p2p AI handbook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-1: #0c1022;
+      --bg-2: #1b2457;
+      --card: #f8f9ff;
+      --ink: #141937;
+      --muted: #5e6485;
+      --line: #dce1ff;
+      --brand: #5567ff;
+      --brand-2: #00bcd4;
+      --accent: #ff7aa2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Outfit', sans-serif;
+      color: white;
+      background:
+        radial-gradient(circle at 12% 20%, rgba(255, 122, 162, 0.28), transparent 35%),
+        radial-gradient(circle at 85% 15%, rgba(0, 188, 212, 0.24), transparent 35%),
+        linear-gradient(130deg, var(--bg-1), var(--bg-2));
+      overflow-x: hidden;
+      padding: 28px 18px;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(8px);
+      pointer-events: none;
+      z-index: 0;
+      animation: float 10s ease-in-out infinite;
+    }
+
+    .orb.one {
+      width: 220px;
+      height: 220px;
+      top: -40px;
+      right: 6%;
+      background: rgba(255, 122, 162, 0.24);
+    }
+
+    .orb.two {
+      width: 180px;
+      height: 180px;
+      bottom: 3%;
+      left: 4%;
+      animation-delay: -3s;
+      background: rgba(0, 188, 212, 0.24);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(16px); }
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(1080px, 100%);
+      margin: 0 auto;
+    }
+
+    .hero {
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 22px;
+      padding: 26px 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    .eyebrow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #d4d8ff;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.06;
+      margin-bottom: 10px;
+      font-weight: 800;
+    }
+
+    h1 a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .sub {
+      color: #e4e7ff;
+      max-width: 760px;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      padding: 7px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.1);
+      font-size: 0.8rem;
+      color: #eef0ff;
+    }
+
+    .panel {
+      background: var(--card);
+      color: var(--ink);
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 55px rgba(8, 15, 56, 0.28);
+      padding: 22px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .section-head h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .card-link {
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 16px;
+      padding: 14px 14px 13px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-link::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(130deg, rgba(85,103,255,0.12), rgba(0,188,212,0.08));
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .card-link:hover {
+      transform: translateY(-3px);
+      border-color: #bfc8ff;
+      box-shadow: 0 12px 24px rgba(20, 26, 70, 0.16);
+    }
+
+    .card-link:hover::before {
+      opacity: 1;
+    }
+
+    .card-top {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      color: #4450aa;
+      background: #edf0ff;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-weight: 700;
+    }
+
+    .arrow {
+      font-weight: 800;
+      color: #5161dc;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .card-title {
+      position: relative;
+      z-index: 1;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .card-text {
+      position: relative;
+      z-index: 1;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.35;
+    }
+
+    .foot {
+      margin-top: 14px;
+      color: #d6dbff;
+      font-size: 0.86rem;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      body {
+        padding: 14px;
+      }
+
+      .hero,
+      .panel {
+        border-radius: 16px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-  <p>Redirecting to <a href="web-dev-reference.html">web-dev-reference.html</a>...</p>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Internal Reference • Startup Handbook</div>
+      <h1><a href="index.html">p2p AI handbook</a></h1>
+      <p class="sub">Single place for engineering onboarding: frontend, backend, product delivery, and Agile execution with Jira. Open any section and use the right-side learning panel for deep references.</p>
+      <div class="pill-row">
+        <span class="pill">Practical Code Samples</span>
+        <span class="pill">Team Process Standards</span>
+        <span class="pill">Jira + Agile Playbook</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head">
+        <h2>Browse Handbook Sections</h2>
+        <p>7 focused sections</p>
+      </div>
+
+      <div class="grid">
+        <a class="card-link" href="html-fundamentals.html">
+          <div class="card-top"><span class="tag">Frontend</span><span class="arrow">01</span></div>
+          <div class="card-title">HTML Fundamentals</div>
+          <p class="card-text">Structure, forms, tables, semantic HTML, and media references.</p>
+        </a>
+        <a class="card-link" href="tailwind-css.html">
+          <div class="card-top"><span class="tag">Styling</span><span class="arrow">02</span></div>
+          <div class="card-title">Tailwind CSS</div>
+          <p class="card-text">Utility-first layout, components, responsive patterns, and effects.</p>
+        </a>
+        <a class="card-link" href="javascript-essentials.html">
+          <div class="card-top"><span class="tag">Core JS</span><span class="arrow">03</span></div>
+          <div class="card-title">JavaScript Essentials</div>
+          <p class="card-text">Language basics, DOM work, async patterns, and state management.</p>
+        </a>
+        <a class="card-link" href="nextjs-framework.html">
+          <div class="card-top"><span class="tag">Framework</span><span class="arrow">04</span></div>
+          <div class="card-title">Next.js Framework</div>
+          <p class="card-text">Routing, rendering models, APIs, optimization, and performance.</p>
+        </a>
+        <a class="card-link" href="fastapi-python.html">
+          <div class="card-top"><span class="tag">Backend</span><span class="arrow">05</span></div>
+          <div class="card-title">FastAPI in Python</div>
+          <p class="card-text">Endpoints, validation, auth, database patterns, and deployment basics.</p>
+        </a>
+        <a class="card-link" href="agile-development.html">
+          <div class="card-top"><span class="tag">Delivery</span><span class="arrow">06</span></div>
+          <div class="card-title">Agile & Jira</div>
+          <p class="card-text">Epics, stories, tasks, ceremonies, board workflow, and reports.</p>
+        </a>
+        <a class="card-link" href="prompting-ai-tooling.html">
+          <div class="card-top"><span class="tag">AI Workflow</span><span class="arrow">07</span></div>
+          <div class="card-title">Prompting & AI Tooling</div>
+          <p class="card-text">Prompt structures, voice-to-text flow, and onboarding tool setup standards.</p>
+        </a>
+      </div>
+    </section>
+
+    <p class="foot">Built for p2p AI internal onboarding • Updated 2026</p>
+  </main>
 </body>
 </html>

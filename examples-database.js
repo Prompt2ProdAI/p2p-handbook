@@ -3512,7 +3512,487 @@ def test_root():
         language: 'Bash',
         description: 'Run production with multiple workers.',
         code: `pip install gunicorn
-gunicorn main:app -k uvicorn.workers.UvicornWorker -w 4 -b 0.0.0.0:8000`}
+gunicorn main:app -k uvicorn.workers.UvicornWorker -w 4 -b 0.0.0.0:8000`},
+
+    // ============================================
+    // AGILE + JIRA EXAMPLES
+    // ============================================
+    'agile-what': {
+        title: 'What is Agile?',
+        language: 'Process',
+        description: 'Agile is an iterative way of delivering software in small increments with fast feedback loops. Teams prioritize customer value, adaptability, and frequent releases over big upfront plans.',
+        code: `Agile core idea:
+1) Build a small slice
+2) Get feedback quickly
+3) Adjust priorities
+4) Repeat`,
+        notes: 'Agile is not one framework; Scrum and Kanban are common implementations.'
+    },
+    'agile-principles': {
+        title: 'Agile Principles',
+        language: 'Process',
+        description: 'Agile teams emphasize collaboration, working software, and continuous improvement.',
+        code: `Practical principles:
+- Ship value early and often
+- Welcome requirement changes
+- Collaborate daily across roles
+- Keep work sustainable
+- Reflect and improve regularly`,
+        notes: 'In day-to-day work, this means short cycles, frequent demos, and routine retrospectives.'
+    },
+    'agile-frameworks': {
+        title: 'Scrum, Kanban, Lean',
+        language: 'Process',
+        description: 'Different Agile frameworks fit different team contexts.',
+        code: `Scrum:
+- Timeboxed sprints
+- Defined roles and ceremonies
+
+Kanban:
+- Continuous flow
+- WIP limits
+- Focus on cycle time
+
+Lean:
+- Eliminate waste
+- Optimize end-to-end value flow`
+    },
+    'agile-value-delivery': {
+        title: 'Iterative Value Delivery',
+        language: 'Process',
+        description: 'Deliver in thin vertical slices instead of waiting for a large “big-bang” release.',
+        code: `Instead of:
+Build full feature set for 3 months
+
+Do:
+Week 1: login flow
+Week 2: core dashboard
+Week 3: alerts
+... each releasable`
+    },
+    'scrum-roles': {
+        title: 'Scrum Roles',
+        language: 'Process',
+        description: 'Scrum typically involves a Product Owner, Scrum Master, and Developers.',
+        code: `Product Owner:
+- Owns backlog priority
+- Clarifies business value
+
+Scrum Master:
+- Removes process blockers
+- Facilitates ceremonies
+
+Developers:
+- Build and deliver increments`
+    },
+    'scrum-ceremonies': {
+        title: 'Scrum Ceremonies',
+        language: 'Process',
+        description: 'Core Scrum events create alignment and learning cadence.',
+        code: `1) Sprint Planning
+2) Daily Standup
+3) Sprint Review (demo)
+4) Retrospective`,
+        notes: 'Keep ceremonies timeboxed and outcome-focused.'
+    },
+    'scrum-artifacts': {
+        title: 'Scrum Artifacts',
+        language: 'Process',
+        description: 'Artifacts provide visibility into what is planned, in progress, and done.',
+        code: `- Product Backlog: ordered future work
+- Sprint Backlog: sprint-selected work
+- Increment: potentially shippable output`
+    },
+    'scrum-definition-of-done': {
+        title: 'Definition of Done',
+        language: 'Process',
+        description: 'A shared quality checklist that every story must satisfy before being marked done.',
+        code: `Example DoD:
+- Code merged to main
+- Tests passing
+- Acceptance criteria met
+- Reviewed by QA/peer
+- Documentation updated`,
+        notes: 'DoD prevents “done but not really done” ambiguity.'
+    },
+    'agile-backlog': {
+        title: 'Product Backlog',
+        language: 'Process',
+        description: 'A prioritized list of all potential work owned by the Product Owner.',
+        code: `Backlog item fields:
+- Title
+- Business value
+- Priority
+- Estimate
+- Acceptance criteria`,
+        notes: 'Keep top backlog items refined enough for near-term delivery.'
+    },
+    'agile-epic': {
+        title: 'Epic',
+        language: 'Process',
+        description: 'An epic is a large body of work that spans multiple stories/sprints.',
+        code: `Epic: "User Onboarding Revamp"
+Stories:
+- Signup redesign
+- Email verification
+- Profile completion
+- Welcome tutorial`
+    },
+    'agile-story': {
+        title: 'User Story',
+        language: 'Process',
+        description: 'A small, testable unit of user value typically written from user perspective.',
+        code: `Story template:
+As a <type of user>,
+I want <goal>,
+so that <benefit>.
+
+Example:
+As a manager, I want weekly summary emails so that I can track team progress.`
+    },
+    'agile-task': {
+        title: 'Task & Sub-task',
+        language: 'Process',
+        description: 'Tasks break stories into implementation steps; sub-tasks can represent specific engineering actions.',
+        code: `Story: Add password reset
+Tasks:
+- API endpoint
+- Email template
+- UI form
+- Tests
+- QA validation`
+    },
+    'agile-acceptance-criteria': {
+        title: 'Acceptance Criteria',
+        language: 'Process',
+        description: 'Clear pass/fail conditions that define when a story is acceptable.',
+        code: `Given user is on reset page
+When valid email is submitted
+Then reset link is sent
+And success message is shown`,
+        notes: 'Good acceptance criteria reduce rework and handoff confusion.'
+    },
+    'agile-estimation': {
+        title: 'Story Points & Estimation',
+        language: 'Process',
+        description: 'Teams estimate relative complexity/effort, often using story points and planning poker.',
+        code: `Typical point scale:
+1, 2, 3, 5, 8, 13
+
+Estimate based on:
+- Complexity
+- Risk/uncertainty
+- Effort`
+    },
+    'agile-prioritization': {
+        title: 'Prioritization',
+        language: 'Process',
+        description: 'Prioritize by business impact, urgency, dependencies, and implementation cost.',
+        code: `Simple approach:
+Priority score = (Business impact + urgency) - effort cost
+
+Common methods:
+- MoSCoW
+- RICE
+- WSJF`
+    },
+    'agile-sprint-goal': {
+        title: 'Sprint Goal',
+        language: 'Process',
+        description: 'A short statement describing the value outcome the sprint should achieve.',
+        code: `Example sprint goal:
+"Enable first-time users to activate accounts without support help."`,
+        notes: 'Sprint goals align story selection and protect focus during execution.'
+    },
+    'jira-what': {
+        title: 'What is Jira?',
+        language: 'Tooling',
+        description: 'Jira is a work tracking platform for planning, assigning, and monitoring delivery across epics, stories, tasks, and bugs.',
+        code: `Jira basics:
+- Projects
+- Issue types
+- Boards
+- Backlogs
+- Sprints
+- Reports`
+    },
+    'jira-project-setup': {
+        title: 'Project Setup',
+        language: 'Tooling',
+        description: 'Start with a Scrum or Kanban project and define issue types/workflow.',
+        code: `Setup checklist:
+1) Create project (Scrum/Kanban)
+2) Configure issue types
+3) Configure workflow statuses
+4) Add board columns
+5) Invite team members`
+    },
+    'jira-issue-types': {
+        title: 'Issue Types',
+        language: 'Tooling',
+        description: 'Issue types classify work and affect reporting/flow.',
+        code: `Common issue types:
+- Epic
+- Story
+- Task
+- Bug
+- Sub-task`,
+        notes: 'Use consistent issue type semantics across teams.'
+    },
+    'jira-workflow': {
+        title: 'Workflow & Statuses',
+        language: 'Tooling',
+        description: 'Workflow defines allowed transitions and approval gates.',
+        code: `Common statuses:
+To Do -> In Progress -> In Review -> QA -> Done`,
+        notes: 'Keep status count low; too many statuses slow execution.'
+    },
+    'jira-boards': {
+        title: 'Boards (Scrum/Kanban)',
+        language: 'Tooling',
+        description: 'Boards visualize work state and bottlenecks.',
+        code: `Scrum board:
+- Sprint-oriented
+- Uses backlog + sprint planning
+
+Kanban board:
+- Continuous flow
+- WIP limits`
+    },
+    'jira-sprint-management': {
+        title: 'Sprint Management',
+        language: 'Tooling',
+        description: 'Plan sprint scope, execute, and close with results.',
+        code: `Sprint cycle in Jira:
+1) Create sprint
+2) Move stories from backlog
+3) Start sprint (set dates + goal)
+4) Update progress daily
+5) Complete sprint and carryover unfinished issues`
+    },
+    'jira-reports': {
+        title: 'Reports & Dashboards',
+        language: 'Tooling',
+        description: 'Use Jira reports to inspect delivery health and predictability.',
+        code: `Useful reports:
+- Burndown chart
+- Velocity chart
+- Cumulative flow diagram
+- Sprint report
+- Control chart`,
+        notes: 'Review trends every sprint; use data for process changes, not blame.'
+    },
+    'jira-video-tutorial': {
+        title: 'Beginner Video Tutorial',
+        language: 'Video',
+        description: 'A starter tutorial for Jira fundamentals.',
+        code: `Recommended beginner resource:
+Atlassian Answered: Jira Tutorial for Beginners
+https://community.atlassian.com/learning/collection/topic/atlassian-answered-jira-tutorial-for-beginners`,
+        output: `<div style="display:grid;gap:12px">
+            <div style="padding:12px;background:#f8f9fa;border-radius:8px">
+                <strong>Watch:</strong> Jira Tutorial for Beginners (Atlassian)
+            </div>
+            <iframe src="https://www.youtube.com/embed/emidrJeUTaM" title="Jira Tutorial for Beginners" style="width:100%;min-height:320px;border:1px solid #ddd;border-radius:10px" allowfullscreen></iframe>
+            <a href="https://community.atlassian.com/learning/collection/topic/atlassian-answered-jira-tutorial-for-beginners" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:10px 14px;background:#667eea;color:#fff;border-radius:8px;text-decoration:none;font-weight:700;width:max-content">Open Atlassian Learning Page</a>
+        </div>`,
+        notes: 'If the embedded player is blocked in your environment, use the Atlassian learning link above.'
+    },
+
+    // ============================================
+    // PROMPTING + AI TOOLING EXAMPLES
+    // ============================================
+    'prompting-star-method': {
+        title: 'STAR Prompt Method',
+        language: 'Prompting',
+        description: 'Use STAR to make your request structured and clear: Situation, Task, Action, Result.',
+        code: `Use this template:
+
+Situation:
+<Current context, codebase, environment>
+
+Task:
+<Exactly what you want done>
+
+Action:
+<Constraints, tools, preferences, boundaries>
+
+Result:
+<Definition of done + expected output format>`,
+        notes: 'STAR reduces ambiguous prompts and improves first-pass success rate.'
+    },
+    'prompting-agent-request': {
+        title: 'How to Ask an Agent',
+        language: 'Prompting',
+        description: 'Good agent prompts are concrete, scoped, and verifiable.',
+        code: `High-quality request pattern:
+1) What file(s) to edit
+2) Behavior to change
+3) Non-goals (what not to touch)
+4) Validation command(s)
+5) Expected final output
+
+Example:
+"Update auth middleware in auth.py to reject expired tokens, keep all route handlers unchanged, and run tests/test_auth.py."`
+    },
+    'prompting-success-criteria': {
+        title: 'Define Success Criteria',
+        language: 'Prompting',
+        description: 'Always include measurable success criteria so the agent knows when to stop.',
+        code: `Example success criteria:
+- Tests pass: pytest tests/test_login.py
+- UI behavior: error message shown on invalid OTP
+- No changes outside: src/auth/*`
+    },
+    'prompting-context-packet': {
+        title: 'Context Packet Template',
+        language: 'Prompting',
+        description: 'Provide compact but sufficient context before asking for implementation.',
+        code: `Context packet:
+- Objective
+- Relevant files
+- Current bug/limitation
+- Desired behavior
+- Constraints (time, stack, style)
+- Validation command`
+    },
+    'prompting-decomposition': {
+        title: 'Task Decomposition',
+        language: 'Prompting',
+        description: 'Break large requests into smaller dependent tasks to reduce errors.',
+        code: `Instead of:
+"Build full billing module"
+
+Do:
+1) DB schema and migration
+2) API endpoints
+3) UI integration
+4) Tests + docs`
+    },
+    'prompting-fewshot': {
+        title: 'Few-shot Prompting',
+        language: 'Prompting',
+        description: 'Provide one or two examples of desired output format or coding style.',
+        code: `Prompt addition:
+"Use this existing function style as reference:
+def normalize_user(...): ...
+
+Generate new helpers in same style."`
+    },
+    'prompting-refinement-loop': {
+        title: 'Refinement Loop',
+        language: 'Prompting',
+        description: 'Use iterative prompts: first draft, critique, then tighten.',
+        code: `Loop:
+1) "Give first implementation"
+2) "Now optimize for readability"
+3) "Now add tests for edge cases"
+4) "Now summarize changes by file"`
+    },
+    'prompting-homogeneous': {
+        title: 'Homogeneous Prompt Format',
+        language: 'Prompting',
+        description: 'Use one standard internal prompt format across the team for consistency.',
+        code: `Recommended homogeneous format:
+[Goal]
+[Context]
+[Constraints]
+[Files]
+[Validation]
+[Output format]
+
+Benefits:
+- Faster reviews
+- Better handoffs
+- Predictable agent responses`,
+        notes: 'If you want, we can enforce this as a mandatory template in onboarding docs.'
+    },
+    'tooling-google-antigravity': {
+        title: 'Google Anti-Gravity Coding IDE',
+        language: 'Tooling',
+        description: 'Team recommendation: use Google Anti-Gravity coding IDE as your default AI coding workspace.',
+        code: `Onboarding recommendation:
+1) Install/sign in to Google Anti-Gravity IDE
+2) Connect your GitHub account
+3) Clone onboarding repository
+4) Enable AI coding assistant features
+5) Set project formatter/linter defaults`,
+        notes: 'If setup fails, contact the engineering onboarding channel for assisted setup.'
+    },
+    'tooling-google-pro-student': {
+        title: 'Google Pro Student Account',
+        language: 'Tooling',
+        description: 'Onboarding members should use a Google Pro Student account for recommended tool access.',
+        code: `Requirement:
+- Use Google Pro Student account for onboarding tools
+
+If unavailable:
+- Reach out to onboarding/admin team
+- We will help arrange access path`,
+        notes: 'Include your name, university/company email, and onboarding batch when requesting access help.'
+    },
+    'tooling-whisper-flow-windows': {
+        title: 'Whisper Flow on Windows',
+        language: 'Tooling',
+        description: 'Use Whisper Flow for speech-to-text prompt drafting while coding.',
+        code: `Windows speech-to-prompt workflow:
+1) Install Whisper Flow
+2) Configure global hotkey
+3) Select microphone + language
+4) Dictate prompt into IDE/editor
+5) Run a quick cleanup pass before send`,
+        notes: 'This is recommended as the default voice dictation workflow for faster prompting.'
+    },
+    'tooling-setup-checklist': {
+        title: 'Onboarding Setup Checklist',
+        language: 'Checklist',
+        description: 'Minimum tooling baseline for new team members.',
+        code: `Checklist:
+- Git + GitHub access
+- Google Anti-Gravity coding IDE
+- Google Pro Student account
+- Whisper Flow configured on Windows
+- Handbook pages bookmarked
+- Prompt template copied locally`
+    },
+    'voice-why-speech-to-text': {
+        title: 'Why Speech-to-Text Helps',
+        language: 'Workflow',
+        description: 'Voice input increases prompt throughput and helps capture ideas while coding.',
+        code: `Benefits:
+- Faster than typing long prompts
+- Better when multitasking/debugging
+- Lower friction for iterative prompting`
+    },
+    'voice-dictation-pattern': {
+        title: 'Dictation Prompt Pattern',
+        language: 'Workflow',
+        description: 'Dictate prompts using structured labels so cleanup is easy.',
+        code: `Voice prompt pattern:
+"Situation: ...
+Task: ...
+Action constraints: ...
+Result expected: ..."`
+    },
+    'voice-cleanup-pass': {
+        title: 'Cleanup Pass Before Sending',
+        language: 'Workflow',
+        description: 'Always perform a quick edit pass after dictation.',
+        code: `Cleanup checklist:
+- Fix file names and function names
+- Remove filler words
+- Add exact commands/paths
+- Confirm desired output format`
+    },
+    'voice-hotkey-workflow': {
+        title: 'Hotkey Workflow',
+        language: 'Workflow',
+        description: 'Map one hotkey for start/stop dictation and one for paste/send.',
+        code: `Recommended workflow:
+Hotkey 1: Start/stop dictation
+Hotkey 2: Paste transcript in editor
+Hotkey 3: Trigger send/submit`
+    }
 
 };
 
