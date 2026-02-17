@@ -645,109 +645,70 @@
     <div class="container">
         <header>
             <h1><a href="index.html">p2p AI handbook</a></h1>
-            <p>Build high-performance APIs with Python</p>
+            <p>Design, build, and evaluate production-ready Retrieval-Augmented Generation systems</p>
             <div class="section-nav"><a href="html-fundamentals.html">HTML Fundamentals</a><a href="tailwind-css.html">Tailwind CSS</a><a href="javascript-essentials.html">JavaScript Essentials</a><a href="nextjs-framework.html">Next.js Framework</a><a href="fastapi-python.html">FastAPI in Python</a><a href="agile-development.html">Agile & Jira</a><a href="prompting-ai-tooling.html">Prompting & AI Tooling</a><a href="rag-development.html">RAG Development</a></div>
         </header>
 
         <div class="content">
 <section class="section">
                 <div class="section-header">
-                    <div class="section-number">5</div>
+                    <div class="section-number">8</div>
                     <div class="section-info">
-                        <h2>FastAPI in Python</h2>
-                        <p>Build high-performance APIs with Python</p>
+                        <h2>RAG Development</h2>
+                        <p>From ingestion and chunking to retrieval quality and grounded responses</p>
                     </div>
                 </div>
 
                 <div class="topics-grid">
                     <div class="topic-card">
                         <div class="topic-header">
-                            <span class="topic-icon">🐍</span>
-                            <h3 class="topic-title">Introduction</h3>
+                            <span class="topic-icon">📚</span>
+                            <h3 class="topic-title">Data & Indexing</h3>
                         </div>
                         <ul class="concept-list">
-                            <li class="concept-item" data-example="fastapi-intro">What is FastAPI?</li>
-                            <li class="concept-item" data-example="fastapi-setup">Installation & Setup</li>
-                            <li class="concept-item" data-example="fastapi-first-api">First API</li>
-                            <li class="concept-item" data-example="fastapi-docs">Auto Documentation</li>
+                            <li class="concept-item" data-example="rag-ingestion-pipeline">Ingestion Pipeline</li>
+                            <li class="concept-item" data-example="rag-chunking-strategy">Chunking Strategy</li>
+                            <li class="concept-item" data-example="rag-embeddings-basics">Embeddings Basics</li>
+                            <li class="concept-item" data-example="rag-metadata-filtering">Metadata & Filtering</li>
                         </ul>
                     </div>
 
                     <div class="topic-card">
                         <div class="topic-header">
-                            <span class="topic-icon">🛣️</span>
-                            <h3 class="topic-title">Routing</h3>
+                            <span class="topic-icon">🔎</span>
+                            <h3 class="topic-title">Retrieval Layer</h3>
                         </div>
                         <ul class="concept-list">
-                            <li class="concept-item" data-example="fastapi-path">Path Parameters</li>
-                            <li class="concept-item" data-example="fastapi-query">Query Parameters</li>
-                            <li class="concept-item" data-example="fastapi-body">Request Body</li>
-                            <li class="concept-item" data-example="fastapi-methods">HTTP Methods</li>
+                            <li class="concept-item" data-example="rag-vector-search">Vector Similarity Search</li>
+                            <li class="concept-item" data-example="rag-hybrid-search">Hybrid Search</li>
+                            <li class="concept-item" data-example="rag-reranking">Reranking</li>
+                            <li class="concept-item" data-example="rag-query-rewrite">Query Rewriting</li>
                         </ul>
                     </div>
 
                     <div class="topic-card">
                         <div class="topic-header">
-                            <span class="topic-icon">📝</span>
-                            <h3 class="topic-title">Pydantic Models</h3>
+                            <span class="topic-icon">🧠</span>
+                            <h3 class="topic-title">Generation Layer</h3>
                         </div>
                         <ul class="concept-list">
-                            <li class="concept-item" data-example="fastapi-models">Data Models</li>
-                            <li class="concept-item" data-example="fastapi-validation">Validation</li>
-                            <li class="concept-item" data-example="fastapi-response-models">Response Models</li>
-                            <li class="concept-item" data-example="fastapi-nested">Nested Models</li>
+                            <li class="concept-item" data-example="rag-context-windowing">Context Assembly</li>
+                            <li class="concept-item" data-example="rag-grounded-prompting">Grounded Prompting</li>
+                            <li class="concept-item" data-example="rag-citation-format">Citation Formatting</li>
+                            <li class="concept-item" data-example="rag-fallback-handling">Fallback Behavior</li>
                         </ul>
                     </div>
 
                     <div class="topic-card">
                         <div class="topic-header">
-                            <span class="topic-icon">💉</span>
-                            <h3 class="topic-title">Dependencies</h3>
+                            <span class="topic-icon">📈</span>
+                            <h3 class="topic-title">Evaluation & Ops</h3>
                         </div>
                         <ul class="concept-list">
-                            <li class="concept-item" data-example="fastapi-depends">Dependency Injection</li>
-                            <li class="concept-item" data-example="fastapi-db">Database Dependencies</li>
-                            <li class="concept-item" data-example="fastapi-auth-dep">Auth Dependencies</li>
-                            <li class="concept-item" data-example="fastapi-global-deps">Global Dependencies</li>
-                        </ul>
-                    </div>
-
-                    <div class="topic-card">
-                        <div class="topic-header">
-                            <span class="topic-icon">🔐</span>
-                            <h3 class="topic-title">Security</h3>
-                        </div>
-                        <ul class="concept-list">
-                            <li class="concept-item" data-example="fastapi-auth">Authentication</li>
-                            <li class="concept-item" data-example="fastapi-jwt">JWT Tokens</li>
-                            <li class="concept-item" data-example="fastapi-oauth2">OAuth2</li>
-                            <li class="concept-item" data-example="fastapi-cors">CORS</li>
-                        </ul>
-                    </div>
-
-                    <div class="topic-card">
-                        <div class="topic-header">
-                            <span class="topic-icon">🗄️</span>
-                            <h3 class="topic-title">Database & CRUD</h3>
-                        </div>
-                        <ul class="concept-list">
-                            <li class="concept-item" data-example="fastapi-sqlalchemy">SQLAlchemy</li>
-                            <li class="concept-item" data-example="fastapi-crud">CRUD Operations</li>
-                            <li class="concept-item" data-example="fastapi-async-db">Async Database</li>
-                            <li class="concept-item" data-example="fastapi-migrations">Migrations</li>
-                        </ul>
-                    </div>
-
-                    <div class="topic-card">
-                        <div class="topic-header">
-                            <span class="topic-icon">⚡</span>
-                            <h3 class="topic-title">Advanced</h3>
-                        </div>
-                        <ul class="concept-list">
-                            <li class="concept-item" data-example="fastapi-websocket">WebSockets</li>
-                            <li class="concept-item" data-example="fastapi-background">Background Tasks</li>
-                            <li class="concept-item" data-example="fastapi-testing">Testing</li>
-                            <li class="concept-item" data-example="fastapi-deploy">Deployment</li>
+                            <li class="concept-item" data-example="rag-metrics-baseline">RAG Metrics Baseline</li>
+                            <li class="concept-item" data-example="rag-eval-dataset">Eval Dataset</li>
+                            <li class="concept-item" data-example="rag-observability">Observability</li>
+                            <li class="concept-item" data-example="rag-deployment-checklist">Deployment Checklist</li>
                         </ul>
                     </div>
                 </div>

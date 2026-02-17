@@ -3992,6 +3992,201 @@ Result expected: ..."`
 Hotkey 1: Start/stop dictation
 Hotkey 2: Paste transcript in editor
 Hotkey 3: Trigger send/submit`
+    },
+    'rag-ingestion-pipeline': {
+        title: 'Ingestion Pipeline',
+        language: 'RAG',
+        description: 'Build ingestion as a repeatable pipeline so new content can be indexed safely and consistently.',
+        code: `Pipeline stages:
+1) Source sync (PDFs, docs, DB rows, pages)
+2) Normalize text + strip noise
+3) Split into chunks
+4) Create embeddings
+5) Upsert into vector store
+6) Record source + version metadata`
+    },
+    'rag-chunking-strategy': {
+        title: 'Chunking Strategy',
+        language: 'RAG',
+        description: 'Chunk size and overlap directly impact retrieval precision and answer completeness.',
+        code: `Baseline:
+- chunk_size: 400 to 800 tokens
+- overlap: 10 to 20%
+
+Heuristic:
+- Use smaller chunks for FAQs/reference docs
+- Use larger chunks for narrative docs`
+    },
+    'rag-embeddings-basics': {
+        title: 'Embeddings Basics',
+        language: 'RAG',
+        description: 'Embeddings map text to vectors so semantically similar texts are close in vector space.',
+        code: `# Pseudocode
+emb = embedding_model.embed(text_chunk)
+vector_db.upsert({
+  id: chunk_id,
+  vector: emb,
+  text: chunk_text,
+  metadata: { source, section, updated_at }
+})`
+    },
+    'rag-metadata-filtering': {
+        title: 'Metadata & Filtering',
+        language: 'RAG',
+        description: 'Store metadata with each chunk to enforce tenant boundaries, recency, and content-type constraints.',
+        code: `filters = {
+  tenant_id: "acme",
+  doc_type: "policy",
+  updated_at_gte: "2026-01-01"
+}
+
+results = vector_db.search(query_vec, top_k=20, filter=filters)`
+    },
+    'rag-vector-search': {
+        title: 'Vector Similarity Search',
+        language: 'RAG',
+        description: 'Use ANN vector search to retrieve the nearest semantic chunks for a user query.',
+        code: `query_vec = embed(user_query)
+candidates = vector_db.search(
+  vector=query_vec,
+  top_k=25
+)
+
+# Later reduce to top N for generation
+selected = candidates[:8]`
+    },
+    'rag-hybrid-search': {
+        title: 'Hybrid Search',
+        language: 'RAG',
+        description: 'Combine BM25 keyword search with vector search to improve recall on exact terms and entities.',
+        code: `vector_hits = vector_db.search(query_vec, top_k=30)
+keyword_hits = bm25.search(user_query, top_k=30)
+
+merged = reciprocal_rank_fusion(vector_hits, keyword_hits)
+final_hits = merged[:10]`
+    },
+    'rag-reranking': {
+        title: 'Reranking',
+        language: 'RAG',
+        description: 'Use a reranker model to improve ordering quality before passing context to the LLM.',
+        code: `# Cross-encoder reranking
+scored = reranker.score_pairs(
+  query=user_query,
+  passages=candidate_chunks
+)
+top_context = sort_by_score_desc(scored)[:6]`
+    },
+    'rag-query-rewrite': {
+        title: 'Query Rewriting',
+        language: 'RAG',
+        description: 'Rewrite ambiguous user queries into retrieval-friendly forms using entities and intent.',
+        code: `Rewrite rules:
+- expand acronyms
+- include product/version names
+- convert pronouns to explicit entities
+
+Example:
+"how to reset it?"
+-> "How to reset API keys in Project Atlas admin console?"`
+    },
+    'rag-context-windowing': {
+        title: 'Context Assembly',
+        language: 'RAG',
+        description: 'Assemble retrieved chunks within a strict token budget and preserve chunk order/source.',
+        code: `MAX_CONTEXT_TOKENS = 5000
+context = []
+budget = 0
+
+for chunk in reranked_chunks:
+  t = estimate_tokens(chunk.text)
+  if budget + t > MAX_CONTEXT_TOKENS:
+    break
+  context.append(chunk)
+  budget += t`
+    },
+    'rag-grounded-prompting': {
+        title: 'Grounded Prompting',
+        language: 'RAG',
+        description: 'Prompt the LLM to answer only from provided context and explicitly state when evidence is missing.',
+        code: `System:
+"Answer only using CONTEXT.
+If context is insufficient, say 'I don't have enough context.'
+Do not invent facts."
+
+User:
+Question + retrieved context blocks`
+    },
+    'rag-citation-format': {
+        title: 'Citation Formatting',
+        language: 'RAG',
+        description: 'Return answers with source IDs/snippets so users can verify claims quickly.',
+        code: `Answer format:
+1) Short answer
+2) Supporting points
+3) Citations: [doc_id#section], [doc_id#section]
+
+Example citation:
+[employee_handbook_v4#leave-policy]`
+    },
+    'rag-fallback-handling': {
+        title: 'Fallback Behavior',
+        language: 'RAG',
+        description: 'Define deterministic fallback behavior when retrieval confidence is low.',
+        code: `if top_score < 0.42:
+  return {
+    answer: "I do not have enough verified context.",
+    action: "ask_clarifying_question",
+    suggestion: "Please specify product, version, and exact issue."
+  }`
+    },
+    'rag-metrics-baseline': {
+        title: 'RAG Metrics Baseline',
+        language: 'Evaluation',
+        description: 'Track retrieval and answer metrics before tuning prompts or models.',
+        code: `Core metrics:
+- Recall@k
+- MRR / NDCG
+- Groundedness score
+- Citation accuracy
+- Answer latency (p50/p95)
+- Cost per response`
+    },
+    'rag-eval-dataset': {
+        title: 'Eval Dataset',
+        language: 'Evaluation',
+        description: 'Create a fixed benchmark set of realistic questions with expected supporting documents.',
+        code: `Eval set structure:
+- question_id
+- user_question
+- expected_doc_ids
+- expected_answer_traits
+- difficulty_tag
+
+Run this set on every index or prompt change.`
+    },
+    'rag-observability': {
+        title: 'Observability',
+        language: 'Ops',
+        description: 'Log retrieval and generation traces so regressions can be detected and debugged quickly.',
+        code: `Per request log:
+- rewritten_query
+- retrieved_doc_ids + scores
+- reranker_scores
+- final_prompt_tokens
+- model_output
+- latency + cost`
+    },
+    'rag-deployment-checklist': {
+        title: 'Deployment Checklist',
+        language: 'Ops',
+        description: 'Ship RAG changes safely with versioning, rollback, and evaluation gates.',
+        code: `Go-live checklist:
+- index version tagged
+- eval suite passed
+- fallback thresholds validated
+- prompt version tracked
+- canary rollout enabled
+- rollback command tested`
     }
 
 };

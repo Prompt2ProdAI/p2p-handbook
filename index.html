@@ -136,6 +136,18 @@
       padding: 22px;
     }
 
+    .stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .group {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff 0%, #f7f9ff 100%);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
     .section-head {
       display: flex;
       justify-content: space-between;
@@ -152,6 +164,56 @@
     .section-head p {
       color: var(--muted);
       font-size: 0.96rem;
+    }
+
+    .group-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+
+    .group-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.02rem;
+      color: #1f2759;
+    }
+
+    .group-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .group-icon.coding {
+      background: linear-gradient(140deg, #5567ff, #3e9dff);
+    }
+
+    .group-icon.pm {
+      background: linear-gradient(140deg, #ff7a8a, #ffb85c);
+    }
+
+    .group-icon.tech {
+      background: linear-gradient(140deg, #00bcd4, #36d27e);
+    }
+
+    .group-count {
+      font-size: 0.78rem;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #edf1ff;
+      color: #4c57a6;
+      font-weight: 700;
     }
 
     .grid {
@@ -279,45 +341,76 @@
     <section class="panel">
       <div class="section-head">
         <h2>Browse Handbook Sections</h2>
-        <p>7 focused sections</p>
+        <p>8 focused sections</p>
       </div>
 
-      <div class="grid">
-        <a class="card-link" href="html-fundamentals.html">
-          <div class="card-top"><span class="tag">Frontend</span><span class="arrow">01</span></div>
-          <div class="card-title">HTML Fundamentals</div>
-          <p class="card-text">Structure, forms, tables, semantic HTML, and media references.</p>
-        </a>
-        <a class="card-link" href="tailwind-css.html">
-          <div class="card-top"><span class="tag">Styling</span><span class="arrow">02</span></div>
-          <div class="card-title">Tailwind CSS</div>
-          <p class="card-text">Utility-first layout, components, responsive patterns, and effects.</p>
-        </a>
-        <a class="card-link" href="javascript-essentials.html">
-          <div class="card-top"><span class="tag">Core JS</span><span class="arrow">03</span></div>
-          <div class="card-title">JavaScript Essentials</div>
-          <p class="card-text">Language basics, DOM work, async patterns, and state management.</p>
-        </a>
-        <a class="card-link" href="nextjs-framework.html">
-          <div class="card-top"><span class="tag">Framework</span><span class="arrow">04</span></div>
-          <div class="card-title">Next.js Framework</div>
-          <p class="card-text">Routing, rendering models, APIs, optimization, and performance.</p>
-        </a>
-        <a class="card-link" href="fastapi-python.html">
-          <div class="card-top"><span class="tag">Backend</span><span class="arrow">05</span></div>
-          <div class="card-title">FastAPI in Python</div>
-          <p class="card-text">Endpoints, validation, auth, database patterns, and deployment basics.</p>
-        </a>
-        <a class="card-link" href="agile-development.html">
-          <div class="card-top"><span class="tag">Delivery</span><span class="arrow">06</span></div>
-          <div class="card-title">Agile & Jira</div>
-          <p class="card-text">Epics, stories, tasks, ceremonies, board workflow, and reports.</p>
-        </a>
-        <a class="card-link" href="prompting-ai-tooling.html">
-          <div class="card-top"><span class="tag">AI Workflow</span><span class="arrow">07</span></div>
-          <div class="card-title">Prompting & AI Tooling</div>
-          <p class="card-text">Prompt structures, voice-to-text flow, and onboarding tool setup standards.</p>
-        </a>
+      <div class="stack">
+        <div class="group">
+          <div class="group-head">
+            <div class="group-title"><span class="group-icon coding">01</span> Coding</div>
+            <span class="group-count">5 sections</span>
+          </div>
+          <div class="grid">
+            <a class="card-link" href="html-fundamentals.html">
+              <div class="card-top"><span class="tag">Frontend</span><span class="arrow">01</span></div>
+              <div class="card-title">HTML Fundamentals</div>
+              <p class="card-text">Structure, forms, tables, semantic HTML, and media references.</p>
+            </a>
+            <a class="card-link" href="tailwind-css.html">
+              <div class="card-top"><span class="tag">Styling</span><span class="arrow">02</span></div>
+              <div class="card-title">Tailwind CSS</div>
+              <p class="card-text">Utility-first layout, components, responsive patterns, and effects.</p>
+            </a>
+            <a class="card-link" href="javascript-essentials.html">
+              <div class="card-top"><span class="tag">Core JS</span><span class="arrow">03</span></div>
+              <div class="card-title">JavaScript Essentials</div>
+              <p class="card-text">Language basics, DOM work, async patterns, and state management.</p>
+            </a>
+            <a class="card-link" href="nextjs-framework.html">
+              <div class="card-top"><span class="tag">Framework</span><span class="arrow">04</span></div>
+              <div class="card-title">Next.js Framework</div>
+              <p class="card-text">Routing, rendering models, APIs, optimization, and performance.</p>
+            </a>
+            <a class="card-link" href="fastapi-python.html">
+              <div class="card-top"><span class="tag">Backend</span><span class="arrow">05</span></div>
+              <div class="card-title">FastAPI in Python</div>
+              <p class="card-text">Endpoints, validation, auth, database patterns, and deployment basics.</p>
+            </a>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <div class="group-title"><span class="group-icon pm">02</span> Project Management</div>
+            <span class="group-count">1 section</span>
+          </div>
+          <div class="grid">
+            <a class="card-link" href="agile-development.html">
+              <div class="card-top"><span class="tag">Delivery</span><span class="arrow">06</span></div>
+              <div class="card-title">Agile & Jira</div>
+              <p class="card-text">Epics, stories, tasks, ceremonies, board workflow, and reports.</p>
+            </a>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <div class="group-title"><span class="group-icon tech">03</span> Tech & AI</div>
+            <span class="group-count">2 sections</span>
+          </div>
+          <div class="grid">
+            <a class="card-link" href="prompting-ai-tooling.html">
+              <div class="card-top"><span class="tag">AI Workflow</span><span class="arrow">07</span></div>
+              <div class="card-title">Prompting & AI Tooling</div>
+              <p class="card-text">Prompt structures, voice-to-text flow, and onboarding tool setup standards.</p>
+            </a>
+            <a class="card-link" href="rag-development.html">
+              <div class="card-top"><span class="tag">Knowledge</span><span class="arrow">08</span></div>
+              <div class="card-title">RAG Development</div>
+              <p class="card-text">Build retrieval pipelines, vector search, reranking, and evaluation loops.</p>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
